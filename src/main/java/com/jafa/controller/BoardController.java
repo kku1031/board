@@ -1,7 +1,5 @@
 package com.jafa.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jafa.model.Board;
 import com.jafa.model.Criteria;
+import com.jafa.model.PageMaker;
 import com.jafa.service.BoardService;
 
 @Controller
@@ -23,8 +22,9 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public String boardList(Model model, Criteria criteria) {
-		List<Board> list = service.getList(criteria);
+		PageMaker pagemaker = new PageMaker(criteria, service.totalCount());
 		model.addAttribute("list",service.getList(criteria));
+		model.addAttribute("pageMaker",pagemaker);
 		return "board/list";
 	}
 	

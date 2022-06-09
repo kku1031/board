@@ -40,4 +40,10 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.delete(bno);
 	}
 
+	@Override
+	public int totalCount() {
+		return boardMapper.totalCount();
+	}
+
+	
 }

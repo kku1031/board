@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNull;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jafa.Apptest;
 import com.jafa.model.Board;
-import com.jafa.model.Criteria;
 
 public class BoardMapperTest extends Apptest{
 

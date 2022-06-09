@@ -12,5 +12,6 @@ public interface BoardService {
 	void register(Board board);
 	void modify(Board board);
 	void remove(Long bno);
+	int totalCount();
 	
 }

@@ -6,6 +6,10 @@
 	<select id="getList" resultType="com.jafa.model.Board">
 		select * from board_tbl limit #{pageStart}, #{perPageNum}
 	</select>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from board_tbl 
+	</select>
 
 	<select id="get" resultType="com.jafa.model.Board">
 		select * from board_tbl where bno = #{bno}
