@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jafa.mapper.BoardMapper;
 import com.jafa.model.Board;
+import com.jafa.model.Criteria;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -15,8 +16,8 @@ public class BoardServiceImpl implements BoardService {
 	BoardMapper boardMapper;
 		
 	@Override
-	public List<Board> getList() {
-		return boardMapper.getList();
+	public List<Board> getList(Criteria criteria) {
+		return boardMapper.getList(criteria);
 	}
 
 	@Override
