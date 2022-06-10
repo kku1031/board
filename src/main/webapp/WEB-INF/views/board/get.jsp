@@ -2,6 +2,11 @@
    pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jspf"%>
 <div class="container">
+	<div class="getData">
+		<input type="hidden" name="page" id="page" value="${param.page}">
+		<input type="hidden" name="type" id="type" value="${param.type}">
+		<input type="hidden" name="keyword" id="keyword" value="${param.keyword}"> 	
+	</div>
    <form id="getForm">
       <input type="hidden" name="bno" value="${board.bno}">      
       <div>
@@ -30,6 +35,9 @@ $(function () {
 	let getForm = $("#getForm"); //목록
 	$('#getForm .list').on('click',function(){
 		getForm.empty();
+		getForm.append($('#page'));
+		getForm.append($('#type'));
+		getForm.append($('#keyword'));
 		getForm.attr("action","list");
 		getForm.submit();
 	
