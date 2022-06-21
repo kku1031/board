@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
+
 public class Criteria {
 
 	int page;
@@ -12,6 +13,13 @@ public class Criteria {
 	
 	String type; // 제목+ 내용 같이 쓰려고 배열로 처리
 	String keyword;	
+	
+	public Criteria(int page, int perPageNum) {
+		super();
+		this.page = page;
+		this.perPageNum = perPageNum;
+	}
+	
 	
 	public Criteria() {
 		this.page = 1;
@@ -25,4 +33,5 @@ public class Criteria {
 	public String[] getTypeCollection() {		
 		return type !=null ? type.split("") : new String[] {};
 	}
+
 }

@@ -57,6 +57,21 @@ $(function () {
 		
 })
 
+//댓글 등록 테스트
+/* $(function () {	
+	let bnoValue = $('input[name="bno"]').val();
+	let reply = {
+			bno : bnoValue,
+			reply : "ajax 댓글 등록 테스트",
+			replyer : "테스터"			
+	};
+	let callback = function(result){
+		alert("결과 : " + result)
+	}
+	
+	replyService.add(reply, callback);
+})
+ */
 </script>
 
 <%@ include file="../layout/footer.jspf"%>
