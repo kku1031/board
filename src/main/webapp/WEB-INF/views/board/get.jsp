@@ -31,31 +31,67 @@
 		<button class="btn btn-danger remove">삭제</button>
 		<button class="btn btn-primary list">목록</button>
 	</form>
-	
+
+	<!-- 댓글 등록 -->
+	<button id="addReplyBtn" type="button" class="btn btn-primary" data-toggle="modal"
+		data-target="#replyForm">댓글 등록</button>
+
 	<!-- 댓글 -->
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4>댓글 달아주세요</h4>
+					<h4 class="test">댓글 달아주세요</h4>
 				</div>
 				<div class="panel-body">
-					<ul class="chat">
-						<li data-rno='1'>
-							<div>
-								<div class='header'>
-									<strong class= 'primary-font'>홍길동</strong>
-									<small class='pull-right text-muted'>2022-02-22</small>
-								</div>
-								<p>	댓글 내용 </p>
-							</div>
-						</li>
-					</ul>
-				</div> 
-			</div><!-- pannel end -->
-		</div><!-- col end -->
-	</div><!-- row end -->
-</div><!-- container end -->
+					<ul class="chat"></ul>
+				</div>
+			</div>
+			<!-- pannel end -->
+		</div>
+		<!-- col end -->
+	</div>
+	<!-- row end -->
+</div>
+<!-- container end -->
+
+<!-- Modal -->
+<div class="modal fade" id="replyForm" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">댓글 달기</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="reply">내용입력</label>
+					<input class="form-control" name="reply">
+				</div>
+				<div class="form-group">
+					<label for="replyer">작성자</label>
+					<input class="form-control" name="replyer" id="replyer">
+				</div>
+				<div class="form-group">
+					<label for="regDate">등록일</label>
+					<input class="form-control" name="regDate" id="regDate">
+				</div>			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="modalModBtn">수정</button>
+				<button type="button" class="btn btn-danger" id="modalRemoveBtn">삭제</button>
+				<button type="button" class="btn btn-primary" id="modalRegisterBtn">등록</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <script>
 $(function(){
@@ -80,9 +116,9 @@ $(function(){
 		getForm.attr("method", "post");
 		getForm.attr("action","remove")
 		getForm.submit();
-	});
-});
+	});	
 
+})	
 	
 
 // 테스트 

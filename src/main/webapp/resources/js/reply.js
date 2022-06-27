@@ -75,18 +75,29 @@ let replyService = (function() {
 				}
 			}
 		});
+	} // update end
+	
+	//조회
+	function get(rno, callback, error){ // 파라미터 이름 rno로
+		$.get(contextPath + "/replies/" + rno, function(result){ //contextPath 추가
+			if(callback) callback(result)
+		}).fail(function(xhr,status,err){
+			if(error) error(err)
+		})
 	}
+	
 	
 	return {
 
 	add: add,
 	getList: getList,
 	remove : remove,
-	update : update
+	update : update,
+	get : get // 반드시 추가하세요
 
 }
 	/*return {"객체이름(property)" : "객체(value)"}*/
-}) ();
+})();
 
 
 console.log(replyService);

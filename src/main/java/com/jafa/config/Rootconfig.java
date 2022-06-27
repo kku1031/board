@@ -7,12 +7,17 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @MapperScan("com.jafa.mapper")
+@EnableAspectJAutoProxy
+@EnableTransactionManagement
 public class Rootconfig {
 
 	@Bean
@@ -31,6 +36,12 @@ public class Rootconfig {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource());
 		return sqlSessionFactoryBean.getObject();
-	}	
+	}
+	
+	@Bean
+	public DataSourceTransactionManager txManager() {
+		return new DataSourceTransactionManager(dataSource());
+		
+	}
 	
 }
