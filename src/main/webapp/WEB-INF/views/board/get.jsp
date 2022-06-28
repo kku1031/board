@@ -36,6 +36,11 @@
 	<button id="addReplyBtn" type="button" class="btn btn-primary" data-toggle="modal"
 		data-target="#replyForm">댓글 등록</button>
 
+	<div>
+		댓글 수 ${board.replyCnt}
+	</div>
+
+
 	<!-- 댓글 -->
 	<div class="row">
 		<div class="col-sm-12">

@@ -58,9 +58,15 @@
 		updateDate = now()
 		where bno = #{bno};	
 	</update>
-	
+		
 	<delete id="delete">
 		delete from board_tbl where bno=#{bno}
 	</delete>
+	
+	<!-- 댓글 증감 -->
+	<update id="updateReplyCnt">
+		update board_tbl set replyCnt = replyCnt + #{amount}
+		where bno = #{bno}
+	</update>
 	
 </mapper>

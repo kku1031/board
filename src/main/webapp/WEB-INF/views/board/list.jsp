@@ -38,16 +38,18 @@
 		<tr>
 			<td>${b.bno}</td>
 			<td>			
-			<a href="${b.bno}" class="get">${b.title}</a>
+			<a href="${b.bno}" class="get">
+				${b.title}<b>[${b.replyCnt}]</b>
+			</a>
 			</td>
 			<td>${b.writer}</td>
 			<td>
 				<fmt:parseDate var="regDate" value="${b.regDate}" pattern="YYYY-MM-dd'T'HH:mm:ss"/>
-				<fmt:formatDate value="${regDate}" pattern="yyyy년 mm월 dd일 HH시 mm분"/>
+				<fmt:formatDate value="${regDate}" pattern="yyyy-mm-dd"/>
 			</td>
 			<td>
 				<fmt:parseDate var="updateDate" value="${b.updateDate}" pattern="YYYY-MM-dd'T'HH:mm:ss"/>
-				<fmt:formatDate value="${updateDate}" pattern="yyyy년 mm월 dd일 HH시 mm분"/>
+				<fmt:formatDate value="${updateDate}" pattern="yyyy-mm-dd"/>
 			</td>
 		</tr>	
 		</c:forEach>
