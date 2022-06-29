@@ -10,7 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor @NoArgsConstructor
 public class AttachFileDTO {
 
-	private String filename;
+	private String fileName;
 	private String uploadPath;
 	private String uuid;
 	private boolean image;

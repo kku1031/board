@@ -1,20 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"	referrerpolicy="no-referrer"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+	referrerpolicy="no-referrer"></script>
 
 </head>
 <body>
-<h2>파일업로드 : AJAX </h2>
-<div class="uploadDiv">
-	<input type="file" name="uploadFile" multiple="multiple">
-</div>
-<button id=uploadBtn>업로드</button>
+	<h2>파일업로드 : AJAX</h2>
+	<div class="uploadDiv">
+		<input type="file" name="uploadFile" multiple="multiple">
+	</div>
+	<button id=uploadBtn>업로드</button>
+	
+<div class="uploadResult">
+	<ul></ul>
+</div>	
 
 
 </body>
@@ -36,6 +41,10 @@ $(function () {
 		return true;
 	}
 	
+	
+	let cloneObj = $(".uploadDiv").clone();
+	
+	
 	$('#uploadBtn').on('click',function(){
 		let formData = new FormData();
 		
@@ -56,9 +65,22 @@ $(function () {
 			success : function(result){
 				alert("Uploaded");
 				console.log(result)
-		}
+				$(".uploadDiv").html(cloneObj.html());	
+				showUploadFile(result);
+			}
 		})
 	})
+	
+	let uploadResult = $('.uploadResult ul');
+	function showUploadFile(uploadResultArr){
+	let str = "";
+	$(uploadResultArr).each(function(i,obj){
+		str+="<li>"+obj.fileName+"</li>"
+	})
+	uploadResult.append(str);
+}
+	
 })
+
 </script>
 </html>

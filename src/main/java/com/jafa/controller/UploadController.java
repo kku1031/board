@@ -70,7 +70,7 @@ public class UploadController {
 			AttachFileDTO attachFileDTO = new AttachFileDTO(); // 객체 생성
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
-			attachFileDTO.setFilename(uploadFileName); //uuid 적용전 원본 파일 세팅
+			attachFileDTO.setFileName(uploadFileName); //uuid 적용전 원본 파일 세팅
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 			
