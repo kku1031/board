@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +24,13 @@ public class UploadController {
 	
 	@PostMapping("uploadFormAction")
 	public void uploadFormAction(MultipartFile[] uploadFile, Model model) {
+		
 		for(MultipartFile file : uploadFile) {
-			System.out.println("==================");
-			System.out.println("파일 이름 : "+file.getOriginalFilename());
-			System.out.println("파일 사이즈 : "+file.getSize());
-			File saveFile = new File("C:/storage/temp", file.getOriginalFilename());
+			String uploadFileName = file.getOriginalFilename();
+			
+			
+			
+			File saveFile = new File("C:/storage/temp", uploadFileName);
 			try {
 				file.transferTo(saveFile);
 			} catch (IllegalStateException e) {
@@ -49,7 +52,12 @@ public class UploadController {
 			uploadPath.mkdirs(); // c:\\storage\\2022\\06\\22
 		}			
 		for(MultipartFile multipartFile : uploadFile) {
-			File savefile = new File(uploadPath, multipartFile.getOriginalFilename());
+			
+			String uploadFileName = multipartFile.getOriginalFilename();
+			UUID uuid = UUID.randomUUID();
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			
+			File savefile = new File(uploadPath, uploadFileName);
 			try {				
 				multipartFile.transferTo(savefile);
 			} catch (IllegalStateException e) {
@@ -64,5 +72,6 @@ public class UploadController {
 		String str = sdf.format(new Date());
 		return str.replace("-", File.separator);
 		// 2022/06/28
+		
 	}
 }
