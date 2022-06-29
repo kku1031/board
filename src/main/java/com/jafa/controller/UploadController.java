@@ -1,7 +1,9 @@
 package com.jafa.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import net.coobird.thumbnailator.Thumbnailator;
 
 
 @Controller
@@ -60,9 +64,16 @@ public class UploadController {
 			File savefile = new File(uploadPath, uploadFileName);
 			try {				
 				multipartFile.transferTo(savefile);
+				if(checkImageType(savefile)) {
+					FileOutputStream thumbnail = new FileOutputStream(
+							new File(uploadPath,"S_"+uploadFileName));
+					Thumbnailator
+					.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+				}
+				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -73,5 +84,15 @@ public class UploadController {
 		return str.replace("-", File.separator);
 		// 2022/06/28
 		
+	}
+	
+	private boolean checkImageType(File file) {
+		try {
+			String contentType = Files.probeContentType(file.toPath());
+			return contentType.startsWith("image");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

@@ -17,4 +17,10 @@ public class Test11 {
 		String test = formDate.replace("-", File.separator);
 		System.out.println(test);
 	}
+	
+	@Test
+	public void test01() {
+		String contentType = "image...";
+		System.out.println(contentType.startsWith("Image"));
+	}
 }

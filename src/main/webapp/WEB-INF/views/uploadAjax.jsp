@@ -21,7 +21,7 @@
 <script>
 $(function () {
 	let contextPath = '${pageContext.request.contextPath}';
-	let regex = new RegExp("(.*?)\.(exe|sh|js|alz|txt)$")
+	let regex = new RegExp("(.*?)\.(exe|sh|js|alz)$")
 	let maxSize = 5242880;
 	
 	function checkExtension(fileName, fileSize){
