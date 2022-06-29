@@ -5,15 +5,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.jafa.model.AttachFileDTO;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -48,28 +55,42 @@ public class UploadController {
 	@GetMapping("/uploadAjax")
 	public void uploadAjax() {}
 	
-	@PostMapping("/uploadAjaxAction")
+	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void uploadAjaxPost(MultipartFile[] uploadFile) {
+	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
+		List<AttachFileDTO> list = new ArrayList<AttachFileDTO>(); //리스트 생성
+		
 		File uploadPath = new File("c:/storage", getFolder());
 		if(!uploadPath.exists()) {
 			uploadPath.mkdirs(); // c:\\storage\\2022\\06\\22
 		}			
+		
 		for(MultipartFile multipartFile : uploadFile) {
 			
+			AttachFileDTO attachFileDTO = new AttachFileDTO(); // 객체 생성
 			String uploadFileName = multipartFile.getOriginalFilename();
+			
+			attachFileDTO.setFilename(uploadFileName); //uuid 적용전 원본 파일 세팅
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 			
 			File savefile = new File(uploadPath, uploadFileName);
 			try {				
 				multipartFile.transferTo(savefile);
+				attachFileDTO.setUuid(uuid.toString()); //uuid
+				attachFileDTO.setUploadPath(getFolder()); // 업로드 폴더
+								
 				if(checkImageType(savefile)) {
+					
+					attachFileDTO.setImage(true); // 이미지 여부
+					
 					FileOutputStream thumbnail = new FileOutputStream(
 							new File(uploadPath,"S_"+uploadFileName));
 					Thumbnailator
 					.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
 				}
+				
+				list.add(attachFileDTO); // 리스트 추가
 				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
@@ -77,6 +98,7 @@ public class UploadController {
 				e.printStackTrace();
 			}
 		}
+		return new ResponseEntity<List<AttachFileDTO>>(list,HttpStatus.OK);
 	}
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

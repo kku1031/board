@@ -55,6 +55,7 @@ $(function () {
 			type : 'post',
 			success : function(result){
 				alert("Uploaded");
+				console.log(result)
 		}
 		})
 	})
