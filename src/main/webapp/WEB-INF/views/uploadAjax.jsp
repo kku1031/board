@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value='${pageContext.request.contextPath}'></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,7 +78,16 @@ $(function () {
 	function showUploadFile(uploadResultArr){
 	let str = "";
 	$(uploadResultArr).each(function(i,obj){
-		str+="<li>"+obj.fileName+"</li>"
+		
+		if(!obj.image){ //이미지가 아닌 경우
+			str+="<li><img src='${contextPath}/resources/img/attach.png' style='width:50px;'></li>"
+		} else { //이미지인 경우
+						
+			let fileCellPath = encodeURIComponent(obj.uploadPath + "/S_" + obj.uuid + "_" +obj.fileName);
+			str+= "<li><img src='${contextPath}/display?fileName="+fileCellPath+"'></li>";
+			
+		}
+		
 	})
 	uploadResult.append(str);
 }
