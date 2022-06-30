@@ -80,8 +80,12 @@ $(function () {
 	$(uploadResultArr).each(function(i,obj){
 		
 		if(!obj.image){ //이미지가 아닌 경우
-			str+="<li><img src='${contextPath}/resources/img/attach.png' style='width:50px;'></li>"
-		} else { //이미지인 경우
+			let fileCellPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" +obj.fileName);
+			str+="<li><img src='${contextPath}/resources/img/attach.png' style='width:50px;'>"
+			str+="<a href='${contextPath}/download?fileName="+fileCellPath+"'>"+obj.fileName+"</a>"
+			str+="</li>"
+			
+			} else { //이미지인 경우
 						
 			let fileCellPath = encodeURIComponent(obj.uploadPath + "/S_" + obj.uuid + "_" +obj.fileName);
 			str+= "<li><img src='${contextPath}/display?fileName="+fileCellPath+"'></li>";
