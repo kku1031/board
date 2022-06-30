@@ -24,6 +24,7 @@
 	<ul></ul>
 </div>	
 
+<div class="oImg"> </div>
 
 </body>
 <script>
@@ -85,18 +86,26 @@ $(function () {
 			str+="<a href='${contextPath}/download?fileName="+fileCellPath+"'>"+obj.fileName+"</a>"
 			str+="</li>"
 			
-			} else { //이미지인 경우
-						
+		} else { //이미지인 경우		
 			let fileCellPath = encodeURIComponent(obj.uploadPath + "/S_" + obj.uuid + "_" +obj.fileName);
-			str+= "<li><img src='${contextPath}/display?fileName="+fileCellPath+"'></li>";
+			let originPath = obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName;
+			originPath = originPath.replace(new RegExp(/\\/g),"/");
 			
-		}
-		
+			str+= "<li><img src='${contextPath}/display?fileName="+fileCellPath+"'>";
+			str+= "<a href='javascript:showImage(\""+originPath+"\")'>이미지원본보기</a>";
+			str+= "</li>"
+		}		
 	})
 	uploadResult.append(str);
-}
+}		
 	
-})
+}) //document. ready end;
+
+function showImage(path) {
+	let imgTag = "<img src='${contextPath}/display?fileName="+encodeURI(path)+"'>";	
+	$('.oImg').html(imgTag);
+		
+}
 
 </script>
 </html>
