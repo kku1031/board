@@ -108,4 +108,9 @@ function showImage(path) {
 }
 
 </script>
+<style>
+.oImg img {width : 300px;}
+</style>
+
+
 </html>
