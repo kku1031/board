@@ -25,4 +25,6 @@ public interface BoardMapper {
 			@Param("bno") Long bno,
 			@Param("amount") int amount			
 	);
+	
+	
 }
