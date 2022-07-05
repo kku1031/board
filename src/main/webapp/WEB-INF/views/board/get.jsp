@@ -31,6 +31,21 @@
 		<button class="btn btn-danger remove">삭제</button>
 		<button class="btn btn-primary list">목록</button>
 	</form>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>파일 첨부</h4>
+				</div>
+				<div class="panel-body">					
+					<div class="uploadResult">
+						<ul></ul>
+					</div>
+				</div> <!-- panel-body -->
+			</div>	<!--  panel end -->	
+		</div>	<!-- col end -->
+	</div>	<!--  row end -->
+
 
 	<!-- 댓글 등록 -->
 	<button id="addReplyBtn" type="button" class="btn btn-primary" data-toggle="modal"

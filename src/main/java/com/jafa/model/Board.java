@@ -21,4 +21,7 @@ public class Board {
 	private LocalDateTime updateDate;
 	
 	private List<BoardAttachVO> attachList;
+	//attachList[0].uuid
+	//attachList[1]
+	
 }

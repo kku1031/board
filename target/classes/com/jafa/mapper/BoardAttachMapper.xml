@@ -10,11 +10,11 @@
 	</insert>
 		
 	<delete id="delete">
-		delete from attach_tbl where uuid =# {uuid}
+		delete from attach_tbl where uuid =#{uuid}
 	</delete>
 	
 	<select id="findByBno" resultType="com.jafa.model.BoardAttachVO">
-		select * from attach_tbl where bno =# {bno}
+		select * from attach_tbl where bno =#{bno}
 	</select>
 		
 </mapper>

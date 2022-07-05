@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jafa.model.AttachFileDTO;
+import com.jafa.model.BoardAttachVO;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -65,8 +65,8 @@ public class UploadController {
 	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
-		List<AttachFileDTO> list = new ArrayList<AttachFileDTO>(); //리스트 생성
+	public ResponseEntity<List<BoardAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile) {
+		List<BoardAttachVO> list = new ArrayList<BoardAttachVO>(); //리스트 생성
 		
 		File uploadPath = new File("c:/storage", getFolder());
 		if(!uploadPath.exists()) {
@@ -75,22 +75,22 @@ public class UploadController {
 		
 		for(MultipartFile multipartFile : uploadFile) {
 			
-			AttachFileDTO attachFileDTO = new AttachFileDTO(); // 객체 생성
+			BoardAttachVO attachVo = new BoardAttachVO(); // 객체 생성
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
-			attachFileDTO.setFileName(uploadFileName); //uuid 적용전 원본 파일 세팅
+			attachVo.setFileName(uploadFileName); //uuid 적용전 원본 파일 세팅
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString() + "_" + uploadFileName;
 			
 			File savefile = new File(uploadPath, uploadFileName);
 			try {				
 				multipartFile.transferTo(savefile);
-				attachFileDTO.setUuid(uuid.toString()); //uuid
-				attachFileDTO.setUploadPath(getFolder()); // 업로드 폴더
+				attachVo.setUuid(uuid.toString()); //uuid
+				attachVo.setUploadPath(getFolder()); // 업로드 폴더
 								
 				if(checkImageType(savefile)) {
 					
-					attachFileDTO.setImage(true); // 이미지 여부
+					attachVo.setFileType(true); // 이미지 여부
 					
 					FileOutputStream thumbnail = new FileOutputStream(
 							new File(uploadPath,"S_"+uploadFileName));
@@ -98,7 +98,7 @@ public class UploadController {
 					.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
 				}
 				
-				list.add(attachFileDTO); // 리스트 추가
+				list.add(attachVo); // 리스트 추가
 				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
@@ -106,7 +106,7 @@ public class UploadController {
 				e.printStackTrace();
 			}
 		}
-		return new ResponseEntity<List<AttachFileDTO>>(list,HttpStatus.OK);
+		return new ResponseEntity<List<BoardAttachVO>>(list,HttpStatus.OK);
 	}
 	
 	@GetMapping("/display")

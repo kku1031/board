@@ -1,14 +1,21 @@
 package com.jafa.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jafa.model.Board;
+import com.jafa.model.BoardAttachVO;
 import com.jafa.model.Criteria;
 import com.jafa.model.PageMaker;
 import com.jafa.service.BoardService;
@@ -61,9 +68,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
-	public String register(Board board, RedirectAttributes rttr) {
+	public String register(Board board, RedirectAttributes rttr) {		
 		service.register(board);
 		rttr.addFlashAttribute("message", board.getBno());
 		return "redirect:list";
+	}
+	
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno){
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
+		return new ResponseEntity<>(attachList, HttpStatus.OK);
 	}
 }
