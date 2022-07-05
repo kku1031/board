@@ -51,6 +51,7 @@ function checkExtension(fileName, fileSize){
 	return true;
 }
 
+
 let uploadResult = $('.uploadResult ul');
 function showUploadResult(uploadResultArr){
 	
@@ -129,7 +130,7 @@ $(function(){
 			}
 		});
 	})	
-	
+	// 파일 삭제
 	$('.uploadResult ul').on('click','span',function(){
 		let targetFile = $(this).data('file');
 		let type = $(this).data('type');

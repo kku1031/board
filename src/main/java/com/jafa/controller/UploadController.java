@@ -93,7 +93,7 @@ public class UploadController {
 					attachVo.setFileType(true); // 이미지 여부
 					
 					FileOutputStream thumbnail = new FileOutputStream(
-							new File(uploadPath,"S_"+uploadFileName));
+							new File(uploadPath,"s_"+uploadFileName));
 					Thumbnailator
 					.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
 				}

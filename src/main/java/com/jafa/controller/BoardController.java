@@ -97,7 +97,7 @@ public class BoardController {
 			try {
 				Files.deleteIfExists(file); //일반 파일까지 삭제
 				if(Files.probeContentType(file).startsWith("image")) {
-					Path thumbNail = Paths.get("C:/storage/"+attach.getUploadPath()+"/S_"+attach.getUuid()+"_"+attach.getFileName());
+					Path thumbNail = Paths.get("C:/storage/"+attach.getUploadPath()+"/s_"+attach.getUuid()+"_"+attach.getFileName());
 					Files.deleteIfExists(thumbNail);
 				}				
 			} catch (IOException e) {
