@@ -50,6 +50,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void remove(Long bno) {
+		attachMapper.deleteAll(bno);
 		boardMapper.delete(bno);
 	}
 

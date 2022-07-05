@@ -1,5 +1,9 @@
 package com.jafa.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +59,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("/remove")
-	public String delete(Long bno, RedirectAttributes rttr) {
-		service.remove(bno);
+	public String remove(Long bno, RedirectAttributes rttr) {
+		
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
+		deleteFiles(attachList);
+		
+		service.remove(bno);		
 		rttr.addFlashAttribute("message", bno);
 		return "redirect:list";
-	}
-	
+	}	
+
 	@GetMapping("/register")
 	public String registerForm(Board board, Model model) {
 		model.addAttribute("board",board);
@@ -80,4 +88,22 @@ public class BoardController {
 		List<BoardAttachVO> attachList = service.getAttachList(bno);
 		return new ResponseEntity<>(attachList, HttpStatus.OK);
 	}
+	
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		if(attachList == null || attachList.size()==0) return;
+		attachList.forEach(attach -> {
+			// uploadPath, uuid, fileName			
+			Path file = Paths.get("C:/storage/"+attach.getUploadPath()+"/"+attach.getUuid()+"_"+attach.getFileName());
+			try {
+				Files.deleteIfExists(file); //일반 파일까지 삭제
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("C:/storage/"+attach.getUploadPath()+"/S_"+attach.getUuid()+"_"+attach.getFileName());
+					Files.deleteIfExists(thumbNail);
+				}				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		});
+	}	
 }
