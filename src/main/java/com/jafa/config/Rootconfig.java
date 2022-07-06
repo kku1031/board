@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -18,6 +19,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @MapperScan("com.jafa.mapper")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
+@EnableScheduling
 public class Rootconfig {
 
 	@Bean

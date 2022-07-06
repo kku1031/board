@@ -21,4 +21,8 @@
 		delete from attach_tbl where bno =#{bno}
 	</delete>
 		
+	<select id="getOldFiles" resultType="com.jafa.model.BoardAttachVO">
+		select*from attach_tbl
+		where uploadPath = date_format(date_add(now(), interval+1 day),'%Y\\%m\\%d');
+	</select>	
 </mapper>
