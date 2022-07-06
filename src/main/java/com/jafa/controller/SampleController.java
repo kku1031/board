@@ -49,4 +49,6 @@ public class SampleController {
 	public String[] getPath(@PathVariable String id) {
 		return new String[] {id, "홍길동"};
 	}
+	
+	
 }

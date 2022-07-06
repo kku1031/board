@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="testBean" class="com.jafa.model.Board">
+		<property name="content" value="ImportResource 테스트"/>
+	</bean>
+	
+	<sec:http>
+		<sec:intercept-url pattern="/security/all" access="pertmitAll"/>
+		<sec:intercept-url pattern="/security/member" access="hasRole('ROLE_MEMBER')"/>
+		<sec:intercept-url pattern="/security/admin" access="hasRole('ROLE_ADMIN')"/>
+		<sec:form-login/>
+	</sec:http>
+	
+	<sec:authentication-manager>
+		<sec:authentication-provider>
+			<sec:user-service>
+				<sec:user name="kku1031" password="{noop}1234" authorities="ROLE_MEMBER"/>
+				<sec:user name="kku1212" password="{noop}1234" authorities="ROLE_MEMBER,ROLE_ADMIN"/>
+			</sec:user-service>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+	
+</beans>
