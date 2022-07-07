@@ -14,12 +14,14 @@ public class SecurityTestController {
 	}
 	
 	@GetMapping("/member")
-	public void doMember() {
+	public String doMember() {
 		System.out.println("회원만");
+		return "member/member";
 	}
 	
 	@GetMapping("/admin")
-	public void doAdmin() {
+	public String doAdmin() {
 		System.out.println("관리자만");
+		return "member/admin";
 	}
 }
