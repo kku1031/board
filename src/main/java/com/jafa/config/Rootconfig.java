@@ -8,6 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -21,9 +22,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @EnableScheduling
-@ImportResource(value = {
-		"classpath:config/security-context.xml"
-})
+//@ImportResource(value = {"classpath:config/security-context.xml"})
+@Import(value = {ServletConfig.class})
 public class Rootconfig {
 
 	@Bean

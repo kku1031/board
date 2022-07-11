@@ -9,6 +9,10 @@ import org.springframework.security.core.userdetails.User;
 
 import com.jafa.model.MemberVO;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter @Getter
 public class CustomUser extends User{
 
 	private MemberVO memberVO;

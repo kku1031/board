@@ -15,16 +15,14 @@
 	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	<bean id="customUserDetailService" class="com.jafa.security.CustomUserDetailService"></bean>
 	
-	<sec:http>
-		<sec:intercept-url pattern="/security/all" access="pertmitAll"/>
+	<sec:http auto-config="true" use-expressions="true">
 		<sec:intercept-url pattern="/security/member" access="hasRole('ROLE_MEMBER')"/>
 		<sec:intercept-url pattern="/security/admin" access="hasRole('ROLE_ADMIN')"/>
 		<sec:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccessHandler"/>
 		<sec:logout logout-url="/customLogout" invalidate-session="true"/>
 		<!-- <sec:access-denied-handler error-page="/accessError"/> -->
 		<sec:access-denied-handler ref="customAccessDeniedHandler"/>
-		<sec:access-denied-handler/>
-		
+		<sec:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>			
 	</sec:http>
 	
 	<sec:authentication-manager>

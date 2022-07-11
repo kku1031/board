@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SecurityTestController {
 	
 	@GetMapping("/all")
-	public void doAll() {
+	public String doAll() {
 		System.out.println("모든 방문");
+		return "member/all";
 	}
 	
 	@GetMapping("/member")
