@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jafa.mapper.MemberMapper">	
+	
+	<resultMap type="com.jafa.model.MemberVO" id="memberMap">
+		<id property="userId" column="userId"/>
+		<result property="userId" column="userId"/>
+		<result property="userPw" column="userPw"/>
+		<result property="userName" column="userName"/>
+		<result property="enabled" column="enabled"/>
+		<result property="regDate" column="regDate"/>
+		<result property="updateDate" column="updateDate"/>
+		<collection property="authList" resultMap="authMap"></collection>				
+	</resultMap>
+	
+	<resultMap type="com.jafa.model.AuthVO" id="authMap">
+		<result property="userId" column="userId"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+
+	<select id="read" resultMap="memberMap">
+		select * from member_tbl M
+		inner join member_auth as A 
+		on M.userid = A.userid
+		where M.userId = #{userId};
+	</select>
+
+</mapper>

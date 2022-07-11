@@ -11,27 +11,30 @@
 	
 	<bean id="customAccessDeniedHandler" class="com.jafa.security.CustomAccessDeniedHandler"/>
 	<bean id="customLoginSuccessHandler" class="com.jafa.security.CustomLoginSuccessHandler"/>
-	<bean id="CustomNoopPasswordEncoder" class="com.jafa.security.CustomNoopPasswordEncoder"/>
+	<!-- <bean id="CustomNoopPasswordEncoder" class="com.jafa.security.CustomNoopPasswordEncoder"/> -->
+	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<bean id="customUserDetailService" class="com.jafa.security.CustomUserDetailService"></bean>
 	
 	<sec:http>
 		<sec:intercept-url pattern="/security/all" access="pertmitAll"/>
-		<sec:intercept-url pattern="/security/member" access="hasRole('ROLE_USER')"/>
+		<sec:intercept-url pattern="/security/member" access="hasRole('ROLE_MEMBER')"/>
 		<sec:intercept-url pattern="/security/admin" access="hasRole('ROLE_ADMIN')"/>
 		<sec:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccessHandler"/>
 		<sec:logout logout-url="/customLogout" invalidate-session="true"/>
 		<!-- <sec:access-denied-handler error-page="/accessError"/> -->
 		<sec:access-denied-handler ref="customAccessDeniedHandler"/>
+		<sec:access-denied-handler/>
 		
 	</sec:http>
 	
 	<sec:authentication-manager>
-		<sec:authentication-provider>
+		<sec:authentication-provider user-service-ref="customUserDetailService">
 			<!-- <sec:user-service>
 				<sec:user name="kku1031" password="{noop}1234" authorities="ROLE_MEMBER"/>
 				<sec:user name="kku1212" password="{noop}1234" authorities="ROLE_MEMBER,ROLE_ADMIN"/>
 			</sec:user-service> -->
-			<sec:jdbc-user-service data-source-ref="dataSource"/>
-			<sec:password-encoder ref="CustomNoopPasswordEncoder"/>
+			<!--  <sec:password-encoder ref="CustomNoopPasswordEncoder"/> -->
+			<sec:password-encoder ref="bCryptPasswordEncoder"/>
 		</sec:authentication-provider>
 	</sec:authentication-manager>
 	
