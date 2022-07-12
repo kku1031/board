@@ -8,9 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -27,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	@Qualifier(value = "뽈롱")
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	AuthenticationFailureHandler failureHandler;
 	
 	@Override	
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,7 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.passwordParameter("loginPw")
 			.loginPage("/customLogin")
 			.loginProcessingUrl("/member/login")
-			.successHandler(loginSuccessHandler);
+			.successHandler(loginSuccessHandler)
+			.failureHandler(failureHandler);
+			
 		http.logout()
 			.logoutUrl("/customLogout")
 			.invalidateHttpSession(true)
