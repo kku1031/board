@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 
 	@Override
@@ -29,7 +31,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 			return;
 		}
 		if(roleNames.contains("ROLE_MEMBER")) {
-			System.out.println("관리자 로그인");
+			System.out.println("회원 로그인");
 			response.sendRedirect(request.getContextPath()+"/security/member");
 			return;
 		}

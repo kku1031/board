@@ -6,20 +6,29 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
+@Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 
+	@Value("loginId")
 	private String loginId;
+	
+	@Value("loginPw")
 	private String loginPw;
+	
+	@Value("errorMessage")
 	private String errorMessage;
+	
+	@Value("/customLogin")
 	private String defaultFailureUrl;
 	
 	@Override

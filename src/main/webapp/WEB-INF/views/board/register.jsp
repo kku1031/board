@@ -4,6 +4,7 @@
 
 <div class="container">
 <form action="register" method="post" id="registerForm">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	제목 : <input type="text" name="title" ><br>
 	내용 :
 	<textarea rows="20" cols="50" name="content"></textarea><br>
@@ -11,7 +12,6 @@
 	<button>글쓰기</button>
 		
 </form>
-
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">

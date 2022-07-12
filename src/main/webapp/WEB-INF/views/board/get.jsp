@@ -10,6 +10,7 @@
 			value="${param.keyword}">
 	</div>
 	<form id="getForm">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="hidden" name="bno" value="${board.bno}">
 		<div>
 			<h3>${board.title}</h3>

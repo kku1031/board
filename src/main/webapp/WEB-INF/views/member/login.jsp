@@ -15,8 +15,8 @@
 				<input type="text" name="loginPw" value="${loginPw}"  placeholder="비밀번호" class="form-control">
 			</div>
 			<div class="form-group">
+				<input type="checkbox" name="remember-me" id="remember-me">
 				<label for="remember-me">Remember Me</label>
-				<input type="checkbox" name="remember-me" id="remember-me" class="form-control">
 			</div>
 			<div class="error_area">
 				${errorMessage}

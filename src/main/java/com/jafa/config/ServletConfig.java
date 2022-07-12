@@ -1,6 +1,7 @@
 package com.jafa.config;
 
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -14,6 +15,7 @@ import com.jafa.common.MemberInterceptor;
 
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.jafa"})
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class ServletConfig implements WebMvcConfigurer {
 
 	@Override
