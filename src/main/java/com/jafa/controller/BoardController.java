@@ -51,14 +51,16 @@ public class BoardController {
 	public String get(Long bno, Model model,
 			@CookieValue(required = false) Cookie viewCount,
 			 HttpServletRequest request, HttpServletResponse response){
-		
+		boolean isAddCount = false; // 조회수를 증가 시킬지 여부
 		if(viewCount!=null) {
 			// 이름이 viewCount인 쿠키가 있을 때
-			String[] viewed = viewCount.getValue().split("/");
+			String[] viewed = viewCount.getValue().split("/"); // 쿠키값 문자열을 배열로
+			// contains() 메소드 사용을 위해 리스트 컬렉션으로 변환
 			List<String> viewedList = Arrays.stream(viewed).collect(Collectors.toList());
-			if(!viewedList.contains(bno.toString())) {
-				viewCount.setValue(viewCount.getValue()+bno+"/");
-				response.addCookie(viewCount);
+			if(!viewedList.contains(bno.toString())) { // 조회한 게시물번호가 없다면
+				viewCount.setValue(viewCount.getValue()+bno+"/"); // 기존 쿠키값 조회한 게시물
+				response.addCookie(viewCount); // 쿠키 업데이트
+				isAddCount = true; // 조회수 증가 매퍼 실행
 			}
 			
 		} else {
@@ -68,13 +70,14 @@ public class BoardController {
 			response.addCookie(cookie);
 		}
 		
-		model.addAttribute("board",service.get(bno));
+		// 두 번째 인수 : 조회수 증가 여부
+		model.addAttribute("board",service.get(bno,isAddCount));
 		return "board/get";
 	}
 	
 	@GetMapping("/modify")
 	public String modifyForm(Long bno, Model model) {
-		model.addAttribute("board",service.get(bno));
+		model.addAttribute("board",service.get(bno,false));
 		return "board/modify";
 	}
 	
