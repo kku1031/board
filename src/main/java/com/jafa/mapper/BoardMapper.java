@@ -22,5 +22,5 @@ public interface BoardMapper {
 	int totalCount(Criteria criteria);
 
 	void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
-
+	void addViewCount(Long bno);
 }

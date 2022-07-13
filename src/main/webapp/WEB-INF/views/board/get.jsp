@@ -24,11 +24,12 @@
 				<fmt:parseDate var="regDate" value="${board.regDate}"
 					pattern="yyyy-MM-dd'T'HH:mm:ss" />
 				<fmt:formatDate value="${regDate}" pattern="yyyy년 MM월 dd일 HH시 mm분" />
-				<br> 수정일 :
+				수정일 :
 				<fmt:parseDate var="updateDate" value="${board.updateDate}"
 					pattern="yyyy-MM-dd'T'HH:mm:ss" />
 				<fmt:formatDate value="${updateDate}"
 					pattern="yyyy년 MM월 dd일 HH시 mm분" />
+				조회수 : ${board.viewCount}	
 			</p>
 			<p>${board.content}</p>
 		</div>	

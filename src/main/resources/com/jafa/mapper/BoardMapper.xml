@@ -66,5 +66,9 @@
   	where bno = #{bno} 
   </update>
   
+  <update id="addViewCount">
+  	update board_tbl set viewCount = viewCount + 1
+  	where bno = #{bno} 
+  </update>
   
 </mapper>

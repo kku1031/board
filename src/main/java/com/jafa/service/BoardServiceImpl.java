@@ -26,8 +26,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.getList(criteria);
 	}
 
+	@Transactional
 	@Override
 	public Board get(Long bno) {
+		//boardMapper.addViewCount(bno);
 		return boardMapper.get(bno);
 	}
 
