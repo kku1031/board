@@ -3,12 +3,14 @@
 <%@ include file="../layout/header.jspf"%>
 
 <div class="container">
+<sec:authentication property="principal.memberVO" var="memberVO"/>
+<sec:authentication property="principal.username" var="writer"/>
 <form action="register" method="post" id="registerForm">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	제목 : <input type="text" name="title" ><br>
 	내용 :
 	<textarea rows="20" cols="50" name="content"></textarea><br>
-	작성자 : <input type="text" name="writer" ><br>
+	작성자 : <input type="text" name="writer" value="${writer}"><br>
 	<button>글쓰기</button>
 		
 </form>
@@ -17,7 +19,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4>파일 첨부</h4>
-			</div>
+			</div>			
 			<div class="panel-body">
 				<div class="form-group uploadDiv">
 					<input type="file" name="uploadFile" multiple="multiple">

@@ -2,12 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jspf"%>
 <script src="${contextPath}/resources/js/get.js"></script>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.username" var="userId"/>
+</sec:authorize>
+
 <div class="container">
 	<div class="getData">
 		<input type="hidden" name="page" id="page" value="${param.page}">
 		<input type="hidden" name="type" id="type" value="${param.type}">
-		<input type="hidden" name="keyword" id="keyword"
-			value="${param.keyword}">
+		<input type="hidden" name="keyword" id="keyword" value="${param.keyword}">
+		<input type="hidden" name="writer" id="writer" value="${board.writer}">
 	</div>
 	<form id="getForm">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -26,10 +30,13 @@
 				<fmt:formatDate value="${updateDate}"
 					pattern="yyyy년 MM월 dd일 HH시 mm분" />
 			</p>
-			<p>${board.content }</p>
-		</div>
+			<p>${board.content}</p>
+		</div>	
 		<button class="btn btn-warning modify">수정</button>
-		<button class="btn btn-danger remove">삭제</button>
+			<button class="btn btn-danger remove">삭제</button>		
+		<c:if test="${userId eq board.writer}">	
+			
+		</c:if>
 		<button class="btn btn-primary list">목록</button>
 	</form>
 	<div class="row">
@@ -49,13 +56,17 @@
 
 
 	<!-- 댓글 등록 -->
+	<sec:authorize access="isAuthenticated()">
 	<button id="addReplyBtn" type="button" class="btn btn-primary" data-toggle="modal"
-		data-target="#replyForm">댓글 등록</button>
-
+		data-target="#replyForm">댓글 등록
+		</button>		
+	</sec:authorize>
+	<sec:authorize access="isAnonymous()">
+		댓글을 등록하시려면 로그인하세요
+	</sec:authorize>
 	<div>
 		댓글 수 ${board.replyCnt}
 	</div>
-
 
 	<!-- 댓글 -->
 	<div class="row">
@@ -113,8 +124,10 @@
 	</div>
 </div>
 
-
 <script>
+
+
+
 $(function(){
 	let getForm = $("#getForm"); //목록
 	$('#getForm .list').on('click',function(){
@@ -134,9 +147,11 @@ $(function(){
 	})
 	
 	$('#getForm .remove'). on('click', function () { //삭제페이지
+		getForm.append($('#writer'))
 		getForm.attr("method", "post");
-		getForm.attr("action","remove")
+		getForm.attr("action","remove");
 		getForm.submit();
+		
 	});	
 
 })	

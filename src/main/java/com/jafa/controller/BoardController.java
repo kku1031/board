@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,7 @@ public class BoardController {
 		return "board/modify";
 	}
 	
+	@PreAuthorize("principal.username == #board.writer")
 	@PostMapping("/modify")
 	public String modify(Board board, RedirectAttributes rttr) {
 		service.modify(board);
@@ -58,9 +60,9 @@ public class BoardController {
 		return "redirect:list";
 	}
 	
+	@PreAuthorize("principal.username == #writer") //작성자외에 사용할 수 없도록 설정
 	@PostMapping("/remove")
-	public String remove(Long bno, RedirectAttributes rttr) {
-		
+	public String remove(Long bno, RedirectAttributes rttr, String writer) {		
 		List<BoardAttachVO> attachList = service.getAttachList(bno);
 		deleteFiles(attachList);
 		
@@ -69,12 +71,13 @@ public class BoardController {
 		return "redirect:list";
 	}	
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/register")
 	public String registerForm(Board board, Model model) {
-		model.addAttribute("board",board);
 		return "board/register";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/register")
 	public String register(Board board, RedirectAttributes rttr) {		
 		service.register(board);

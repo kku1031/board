@@ -1,12 +1,18 @@
+console.log(csrfHeaderName);
+console.log(csrfTokenName);
+
 let replyService = (function() {
+	
+	//댓글 등록
 	function add(reply, callback) {
-
-
 		$.ajax({
 			type: 'post',
 			url: contextPath + '/replies/new',
 			data: JSON.stringify(reply),
-			contentType: 'application/json; charset=utf-8',
+			contentType: 'application/json; charset=utf-8',			
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenName)
+			},
 			success: function(result, status, xhr) {
 				if (callback) {
 					callback(result);
@@ -41,7 +47,9 @@ let replyService = (function() {
 		$.ajax({
 			type: 'delete',
 			url: contextPath + '/replies/'+rno,
-			
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenName)
+			},
 			success: function(result, status, xhr) {
 				if (callback) {
 					callback(result);
@@ -64,6 +72,9 @@ let replyService = (function() {
 			url: contextPath + '/replies/'+ reply.rno,
 			data: JSON.stringify(reply),
 			contentType: 'application/json; charset=utf-8',
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenName)
+			},
 			success: function(result, status, xhr) {
 				if (callback) {
 					callback(result);
